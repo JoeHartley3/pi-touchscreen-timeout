@@ -13,12 +13,30 @@ timeout period is set by a command-line argument.
 the display. Whatever is running will still receive a touch event, even if the display
 is off.
 
-The program will use a linux event device like `/dev/input/event0` to receive events
-from the touchscreen, and `/sys/class/backlight/rpi-backlight/bl_power` to turn the
+The preferred program to use is timeout.py, which will watch all inputs listed by 
+'lsinput' for an event to turn the screen back on.
+
+The C program will use a linux event device like `/dev/input/event0` to receive events
+from the touchscreen.  The event device is a command-line parameter without the
+/dev/input/ path specification.
+
+Both programs use `/sys/class/backlight/rpi-backlight/bl_power` to turn the
 backlight on and off.  The event device is a command-line parameter without the
 /dev/input/ path specification.
 
-# Installation
+# Installation - Python
+
+The library 'evdev' is required to run this program.  Install it with pip:
+```
+pip install evdev
+```
+
+You can then run the program by giving it a single parameter, the amount of time
+in seconds before the screen is blanked.
+```
+sudo python timeout.py 30
+```
+# Installation - C
 
 Clone the repository and change directories:
 ```
@@ -29,14 +47,14 @@ cd pi-touchscreen-timeout
 Build and run it!
 ```
 gcc timeout.c -o timeout
-sudo ./timeout 10 event0
+sudo ./timeout 30 event0
 ```
 
-**Note:** It must be run as root or with `sudo` to be able to access the backlight.
+**Note:** Either program must be run as root or with `sudo` to be able to access
+the backlight.
 
-It is recommended to make it run at startup, for example by putting a line in 
-`/etc/rc.local`
-
+It is recommended to run this at startup, for example by putting a line in 
+`/etc/rc.local`.
 
 ### Conflict with console blanker
 
