@@ -72,7 +72,7 @@ now = datetime.now()
 touch = now
 while True:
     # Cycle through the devices scanning for events.  The last parameter is the wait between checks.
-    # 0.1 (1/10 second) has a load of around 0.5% of one CPU core. Using zero (no wait) consumes 100%
+    # 0.1 (1/10 second) has a load of around 1% of one CPU core. Using zero (no wait) consumes 100%
     # of a core, while no value at all blocks the device.
     r, w, x = select(devices, [], [], 0.1)
     for fd in r:
