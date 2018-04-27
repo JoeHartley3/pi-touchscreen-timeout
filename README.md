@@ -1,10 +1,10 @@
-# pi-touchscreen-timeout
+# Pi-touchscreen-timeout
 Leaving the backlight on the Official Raspberry Pi touchscreen can quickly wear it out.
-If you have a use that requires the pi to be on all the time, but does not require the
+If you have a use that requires the RPi to be on all the time, but does not require the
 display on all the time, then turning off the backlight while not in use can dramatically
 increase the life of the backlight.
 
-pi-touchscreen-timeout will transparently turn off the display backlight after there 
+Pi-touchscreen-timeout will transparently turn off the display backlight after there 
 have been no touches for a specifed timeout, independent of anything using the display
 at the moment. It will then turn the touchscreen back on when it is touched.  The
 timeout period is set by a command-line argument.
@@ -14,11 +14,12 @@ the display. Whatever is running will still receive a touch event, even if the d
 is off.
 
 The preferred program to use is timeout.py, which will watch all inputs listed by 
-'lsinput' for an event to turn the screen back on.
+'lsinput' for an event to turn the screen back on.  The C program only watches a
+specified input device for events.
 
-The C program will use a linux event device like `/dev/input/event0` to receive events
-from the touchscreen.  The event device is a command-line parameter without the
-/dev/input/ path specification.
+The programs both use a linux event device like `/dev/input/event0` to receive events
+from the touchscreen.  When running the C program, the event device to use
+is a command-line parameter without the /dev/input/ path specification.
 
 Both programs use `/sys/class/backlight/rpi-backlight/bl_power` to turn the
 backlight on and off.  The event device is a command-line parameter without the
@@ -43,8 +44,7 @@ Clone the repository and change directories:
 git clone https://github.com/joehartley3/pi-touchscreen-timeout.git
 cd pi-touchscreen-timeout
 ```
-
-Build and run it!
+...or just download timeout.c.  Now you can build and run it!
 ```
 gcc timeout.c -o timeout
 sudo ./timeout 30 event0
