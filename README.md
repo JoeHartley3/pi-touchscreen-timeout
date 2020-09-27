@@ -64,6 +64,13 @@ blanker.  In such an instance, the backlight will be turned on, but with the
 console blanked, it seems like the backlight has not come on.
 
 In this case, follow one of these methods for disabling the console blanker:
+   * Raspian Buster:
+     Edit the file /boot/cmdline.txt and add the following parameter to the line 
+     of text there, then reboot:
+```
+consoleblank=0
+```
+
    * Raspbian Jessie : 
      Add the following line to /etc/rc.local (on the line before the final exit 0) 
      and reboot:
